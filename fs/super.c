@@ -262,6 +262,7 @@ void mount_root(void)
 		panic("Unable to mount root");
 	if (!(mi=iget(ROOT_DEV,ROOT_INO)))
 		panic("Unable to read root i-node");
+    PANICF("Temp STOP :%d\n", 0);
 	mi->i_count += 3 ;	/* NOTE! it is logically used 4 times, not 1 */
 	p->s_isup = p->s_imount = mi;
 	current->pwd = mi;

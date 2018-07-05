@@ -244,6 +244,7 @@ struct m_inode * get_pipe_inode(void)
 struct m_inode * iget(int dev,int nr)
 {
 	struct m_inode * inode, * empty;
+    int i = 0;
 
 	if (!dev)
 		panic("iget with dev==0");
@@ -252,8 +253,11 @@ struct m_inode * iget(int dev,int nr)
 	while (inode < NR_INODE+inode_table) {
 		if (inode->i_dev != dev || inode->i_num != nr) {
 			inode++;
+            printk("inc inode: %d/%d\n", i++, NR_INODE);
 			continue;
 		}
+        PANICF("Not In here!! %d\n", 0);
+
 		wait_on_inode(inode);
 		if (inode->i_dev != dev || inode->i_num != nr) {
 			inode = inode_table;
@@ -288,6 +292,7 @@ struct m_inode * iget(int dev,int nr)
 	inode->i_dev = dev;
 	inode->i_num = nr;
 	read_inode(inode);
+    printk("normally, end of iget()\n");
 	return inode;
 }
 
