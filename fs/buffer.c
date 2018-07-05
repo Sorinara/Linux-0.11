@@ -168,6 +168,9 @@ static inline void insert_into_queues(struct buffer_head * bh)
 	bh->b_next = hash(bh->b_dev,bh->b_blocknr);
 	hash(bh->b_dev,bh->b_blocknr) = bh;
 	bh->b_next->b_prev = bh;
+
+    printk("bh->next       : %p\n", bh->b_next);
+    PANICF("bh->next->prev : %p\n", bh->b_next->b_prev);
 }
 
 /*
